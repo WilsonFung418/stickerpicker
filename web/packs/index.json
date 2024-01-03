@@ -1,6 +1,7 @@
 {
   "packs": [
-    "Queen.json"
+    "Queen.json",
+    "fat1.json"
   ],
   "homeserver_url": "https://matrix.w-solutionshk.xyz"
 }
