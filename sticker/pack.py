@@ -49,13 +49,15 @@ async def upload_sticker(file: str, directory: str, old_stickers: Dict[str, matr
 
     if magic:
         mime = magic.from_file(path, mime=True)
+        
     else:
         mime, _ = mimetypes.guess_type(file)
+        
     if not mime.startswith("image/"):
         return None
 
     # Uncomment below to force "image/gif" mime type for APNGs or animated WEBPs
-    mime = "image/gif"
+    # mime = "image/gif"
 
     print(f"Processing {file}", end="", flush=True)
     try:
