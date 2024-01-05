@@ -49,10 +49,10 @@ async def upload_sticker(file: str, directory: str, old_stickers: Dict[str, matr
 
     if magic:
         mime = magic.from_file(path, mime=True)
-        
+        mime = "image/gif"
     else:
         mime, _ = mimetypes.guess_type(file)
-        
+        mime = "image/gif"
     if not mime.startswith("image/"):
         return None
 
