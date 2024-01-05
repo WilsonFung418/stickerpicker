@@ -25,9 +25,10 @@ from . import matrix
 open_utf8 = partial(open, encoding='UTF-8')
 
 def convert_image(data: bytes) -> (bytes, int, int):
-    image: Image.Image = Image.open(BytesIO(data)).convert("RGBA")
-    new_file = BytesIO()
-    image.save(new_file, "png")
+    #image: Image.Image = Image.open(BytesIO(data)).convert("RGBA")
+    #new_file = BytesIO()
+    #image.save(new_file, "png")
+    image: Image.Image = Image.open(BytesIO(data))
     w, h = image.size
     if w > 256 or h > 256:
         # Set the width and height to lower values so clients wouldn't show them as huge images
