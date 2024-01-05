@@ -55,7 +55,7 @@ async def upload_sticker(file: str, directory: str, old_stickers: Dict[str, matr
         return None
 
     # Uncomment below to force "image/gif" mime type for APNGs or animated WEBPs
-    # mime = "image/gif"
+    mime = "image/gif"
 
     print(f"Processing {file}", end="", flush=True)
     try:
