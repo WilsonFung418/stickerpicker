@@ -136,6 +136,8 @@ parser.add_argument("--add-to-index", help="Sticker picker pack directory (usual
                     type=str, metavar="path")
 parser.add_argument("path", help="Path to the sticker pack directory", type=str)
 
+parser.add_argument("--animated", help="Sticker is animated. Default=0",
+                    type=int, default=1)
 
 def cmd():
     asyncio.get_event_loop().run_until_complete(main(parser.parse_args()))
