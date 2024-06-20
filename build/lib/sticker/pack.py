@@ -49,10 +49,15 @@ async def upload_sticker(file: str, directory: str, old_stickers: Dict[str, matr
 
     if magic:
         mime = magic.from_file(path, mime=True)
+        mime = "image/gif"
     else:
         mime, _ = mimetypes.guess_type(file)
+        mime = "image/gif"
     if not mime.startswith("image/"):
         return None
+
+    # Uncomment below to force "image/gif" mime type for APNGs or animated WEBPs
+    # mime = "image/gif"
 
     print(f"Processing {file}", end="", flush=True)
     try:
@@ -77,11 +82,14 @@ async def upload_sticker(file: str, directory: str, old_stickers: Dict[str, matr
         }
         print(f".. using existing upload")
     else:
-        image_data, width, height = util.convert_image(image_data)
+        #image_data, width, height = util.convert_image(image_data)
+        width, height = util.convert_image(image_data)
         print(".", end="", flush=True)
-        mxc = await matrix.upload(image_data, "image/png", file)
+        #mxc = await matrix.upload(image_data, "image/png", file)
+        mxc = await matrix.upload(image_data, mime, file)
         print(".", end="", flush=True)
-        sticker = util.make_sticker(mxc, width, height, len(image_data), name)
+        #sticker = util.make_sticker(mxc, width, height, len(image_data), name)
+        sticker = util.make_sticker(mxc, width, height, len(image_data), mime, name)
         sticker["id"] = sticker_id
         print(" uploaded", flush=True)
     return sticker
@@ -136,6 +144,8 @@ parser.add_argument("--add-to-index", help="Sticker picker pack directory (usual
                     type=str, metavar="path")
 parser.add_argument("path", help="Path to the sticker pack directory", type=str)
 
+parser.add_argument("--animated", help="Sticker is animated. Default=0",
+                    type=int, default=1)
 
 def cmd():
     asyncio.get_event_loop().run_until_complete(main(parser.parse_args()))
